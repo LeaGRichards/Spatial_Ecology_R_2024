@@ -65,7 +65,8 @@ cl<-colorRampPalette(c("darkolivegreen", "darkorange3", "darkolivegreen1"))(100)
 cln<-colorRampPalette(c("firebrick","darkseagreen","darkslateblue"))(100)
 plot(densitymap, col=cl)
 
-# Build a multiframe of densitymap with 2 different colour palettes next to each other
+# Build a multiframe of densitymap with 2 different colour palettes next to each other and add some points data on one of them
 par(mfrow=c(1,2))
 plot(densitymap, col=cl)
 plot(densitymap, col=cln)
+points(elevattion2)
