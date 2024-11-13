@@ -5,19 +5,22 @@
   #install.packages("devtools")
   library(devtools)
 
-  # using the imageRy package
-  install_github("ducciorocchini/imageRy") # (from devtools)
+  # using the imageRy package (when things are easy)
+  install_github("ducciorocchini/imageRy") # (from devtools) 
+  library(imageRy)
+
+  # Because having a mac is ... unique, this is necessary
+    # dowload file from the link in the error message: https://api.github.com/repos/ducciorocchini/imageRy/tarball/HEAD
+    # Call the package directly from where is is on the mac (probably in Downloads folder)
+    install.packages("/Users/lea/Desktop/R/ducciorocchini-imageRy-a971c18.tar.gz",repos = NULL, type = "source")
+
+    install.packages("dichromat")  
+    install.packages("fields") 
+    install.packages("ggplot2") 
+    install.packages("viridis") 
+
+    # Be proud :) 
+
   library(imageRy)
 
   library(terra)
-  .libPaths()
-  .Library
-  find.package("terra")
-  install.packages("/Users/lea/Desktop/R/ducciorocchini-imageRy-a971c18.tar.gz",repos = NULL, type = "source")
-  install.packages("dichromat")  
-  install.packages("fields") 
-  install.packages("ggplot2") 
-  install.packages("viridis") 
-
-  library(imageRy)
-  
