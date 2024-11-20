@@ -1,4 +1,7 @@
 ### Visualising remote sensing data ###
+  # Remote sensing = we are collecting reflectance data (wavelengths of visible light is reflected)
+  # Satellite has many sensors that gathers information on different wacelengths and then it's added all together
+
 
 # Installing the appropriate packages and calling the necessary libraries
 
@@ -22,5 +25,57 @@
     # Be proud :) 
 
   library(imageRy)
-
   library(terra)
+
+# List the data 
+  im.list()
+  # within data list, we can find "sentinel.dolomites.b2.tif"
+  # Data provided by the ESA (European Space Agency)
+  # The band 2 (B2) data is blue (0.5um) --> see website below for other bands
+  # https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/bands/
+
+# Band 2 --> how much light is reflected by blue wavelengths
+  b2 <- im.import("sentinel.dolomites.b2.tif")
+  # Yellow on map is what reflects blue and the dark blue absorbs blue
+  
+  # We can change the colours of the palette
+  cl <- colorRampPalette(c("black", "grey", "lightgrey")) (100)
+  plot(b2, col=cl)
+  # now white reflects blue and black absorbs blue wavelengths
+  
+# Band 3 -->  how much light is reflected by green wavelengths
+  b3 <- im.import("sentinel.dolomites.b3.tif")
+  plot(b3, col=cl)
+
+# Band 4 -->  how much light is reflected by red wavelengths (large wavelength)
+  b4 <- im.import("sentinel.dolomites.b4.tif")
+  plot(b4, col=cl)
+
+# Band 8 -->  how much light is reflected by near infrared wavelengths
+  b8 <- im.import("sentinel.dolomites.b8.tif")
+  plot(b8, col=cl)
+
+# Theory : 
+  # Incident radiant flux is the light arriving on an object (sunlight) (Energy)
+  # Reflectant radiant flux is the light reflected by that object (energy)
+  # Reflectance = ratio between reflected/incident radiant flux --> ranges from 0 to 1
+  
+  # since the top of the mountain is rock, it reflects ++ light 
+  # therefore is saturating the area on the plot compared to the forest around
+  # We will compare B2 B3 B4 and B8 as they have same resoltion (10m)
+  
+  # Infrared range is divided between near infrared NIR (close to red visible light),
+  # middle infrared (self explanatory)
+  # and the thermal infrared (NOT measuring T° --> only reflectance)
+  
+# Plot all images together in a multifram
+  par(mfrow = c(2,2))
+  plot(b2, col=cl)
+  plot(b3, col=cl)
+  plot(b4, col=cl)
+  plot(b8, col=cl)
+  # Notice visible light is quite similar while NIR provides additional information
+
+# Plot images one over the other (stack images)
+  sentstack <- c(b2, b3, b4, b8)
+  plot(sentstack, col = cl)
