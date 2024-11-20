@@ -79,3 +79,33 @@
 # Plot images one over the other (stack images)
   sentstack <- c(b2, b3, b4, b8)
   plot(sentstack, col = cl)
+
+# Plotting one layer of sentstack
+  dev.off()
+  plot(sentstack[[1]], col = cl)
+  
+# Make a multiframe with different colour palette
+  
+  cl2 <- colorRampPalette(c("dodgerblue4", "deepskyblue1", "white")) (100)
+  cl3 <- colorRampPalette(c("darkgreen", "chartreuse4", "greenyellow")) (100)
+  cl4 <- colorRampPalette(c("darkred", "firebrick1", "pink")) (100)
+  clNIR <- colorRampPalette(c("green", "blueviolet", "yellow")) (100)
+  
+  par(mfrow = c(2,2))
+  plot(b2, col=cl2)
+  plot(b3, col=cl3)
+  plot(b4, col=cl4)
+  plot(b8, col=clNIR)
+
+# RGB Plotting (using function in imageRy package)
+  # Combine all 3 visible light images in a RGB scheme (RGB --> red, green, blue)
+  # 3 basic colours are mounted together and the overlap of colours make the other colours
+  # This creates a natural colour image (what our eyes see)
+  
+  dev.off()
+  im.plotRGB(sentstack, red= 3, green= 2, blue= 1)
+  im.plotRGB(sentstack, r=3, g=2, b=1) # Can also be coded like this
+  im.plotRGB(sentstack, 3, 2, 1) # Can also be coded like this
+  
+  im.plotRGB(sentstack, 4, 3, 2) # Wrong colour image 
+  # Using the NIR makes us see information that our eyes can't see :) (very cool)
