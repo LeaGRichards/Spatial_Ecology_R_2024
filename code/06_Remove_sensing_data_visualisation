@@ -103,8 +103,7 @@
   # This creates a natural colour image (what our eyes see)
   
   dev.off()
-  im.plotRGB(sentstack, red= 3, green= 2, blue= 1)
-  im.plotRGB(sentstack, r=3, g=2, b=1) # Can also be coded like this
+  im.plotRGB(sentstack, r=3, g=2, b=1)
   im.plotRGB(sentstack, 3, 2, 1) # Can also be coded like this
   
   im.plotRGB(sentstack, 4, 3, 2) # Wrong colour image 
