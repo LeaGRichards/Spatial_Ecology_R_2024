@@ -9,18 +9,18 @@
   library(devtools)
 
   # using the imageRy package (when things are easy)
-  install_github("ducciorocchini/imageRy") # (from devtools) 
-  library(imageRy)
+  # install_github("ducciorocchini/imageRy") # (from devtools) 
+  # library(imageRy)
 
   # Because having a mac is ... unique, this is necessary
     # dowload file from the link in the error message: https://api.github.com/repos/ducciorocchini/imageRy/tarball/HEAD
     # Call the package directly from where is is on the mac (probably in Downloads folder)
-    install.packages("/Users/lea/Desktop/R/ducciorocchini-imageRy-a971c18.tar.gz",repos = NULL, type = "source")
+      # install.packages("/Users/lea/Desktop/R/ducciorocchini-imageRy-a971c18.tar.gz",repos = NULL, type = "source")
 
-    install.packages("dichromat")  
-    install.packages("fields") 
-    install.packages("ggplot2") 
-    install.packages("viridis") 
+      # install.packages("dichromat")  
+      # install.packages("fields") 
+      # install.packages("ggplot2") 
+      # install.packages("viridis") 
 
     # Be proud :) 
 
@@ -107,4 +107,12 @@
   im.plotRGB(sentstack, 3, 2, 1) # Can also be coded like this
   
   im.plotRGB(sentstack, 4, 3, 2) # Wrong colour image 
-  # Using the NIR makes us see information that our eyes can't see :) (very cool)
+    # Using the NIR makes us see information that our eyes can't see :) (very cool)
+    # Generally, water is black as it aborsb ++ light; 
+    # In this case the lake is blue on the top left corner
+  
+  im.plotRGB(sentstack, 3, 4, 2) # Wrong colour image, NIR in green 
+    # In this case the previous lake became violet
+
+  im.plotRGB(sentstack, 3, 2, 4) # Wrong colour image, NIR in blue 
+  # Bare grounds becomes yellow
