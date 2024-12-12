@@ -40,10 +40,9 @@ im.list()
   plot(difgr)
     # These areas have decreasing temperature
   
-  # Plotting ??? --> to be confirmed next class :/
+  # Plotting temperature highs
   im.plotRGB(gr, r=1, g=2, b=4)
-    # Every red pixel had a higher value in 2000, and every green had a higher value in 2005
-    # The blue area has higher temperatures
+    # Every red pixel had a higher temperature value in 2000, and every green had a higher value in 2005 and every blue is 2015
   
   # Plotting different frequencies
   im.ridgeline(gr, scale=2, option="A")
