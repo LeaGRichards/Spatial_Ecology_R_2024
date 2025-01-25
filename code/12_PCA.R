@@ -1,6 +1,6 @@
 ### Principle component analysis ###
 
-  # Ding a multivariate analysis to extract the principle component 1 (PC1) to explains most of the variability
+  # Doing a multivariate analysis to extract the principle component 1 (PC1) to explains most of the variability
   # Calculating the stadard deviation of the PC1
 
 # - Setting things up - #
