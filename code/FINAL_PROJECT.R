@@ -127,17 +127,50 @@
 #### Vegetation cover cluster map  #####
 ########################################
 
-# Load the satellite image of Montreal 
+# Loading the satellite image of Montreal 
   mtl <- rast("Montreal2018_4 2.jpg")
 
-  plotRGB(mtl, r=1, g=2, b=3) # Human eye visual image of the study area
-  plot(mtl[[3]]) # NIR band
-  plot(mtl[[4]]) # red band  
-# STEP 2 - NDVI
+# Making an image of the study area with the visual spectrum of the EM spectrum
+  plotRGB(mtl, r=1, g=2, b=3) # What most humans could see
 
-DVImtl <- mtl[[1]]-mtl[[2]] # DVI= NIR - red
-NDVImtl <- DVImtl/(mtl[[1]]+mtl[[2]])
-plot(NDVImtl)
+# Making an image of the near infrared (nir) band of the stduy area
+  plot(mtl[[4]]) # What some insects might see
+
+# Making an image of the red band of the study area
+  plot(mtl[[1]]) # What the nir band will be compared too later
+
+# Installing the appropriate packages and calling their libraries
+  
+  #install.packages("devtools")
+  library(devtools)
+
+  # Calling the imageRy package from devtools     ## Why from devtools??? ###
+    # install_github("ducciorocchini/imageRy")
+    # library(imageRy)
+    # Because I have a mac, I follow these steps instead :
+      # dowload file from the link in the error message: 
+      # https://api.github.com/repos/ducciorocchini/imageRy/tarball/HEAD
+      # Call the package directly from where is is on the mac (probably in Downloads folder) :
+      # install.packages("/Users/lea/Desktop/R/ducciorocchini-imageRy-a971c18.tar.gz",repos = NULL, type = "source")
+
+      # install.packages("dichromat")  
+      # install.packages("fields") 
+      # install.packages("ggplot2") 
+      # install.packages("viridis") 
+
+      library(imageRy)
+      # library(terra)     ##  Might be necessary, let's see once we have an image to try with...
+
+# Calculating the Difference Vegetation Index (DVI)
+  DVImtl <- mtl[[4]]-mtl[[1]] # DVI = NIR band - red band
+
+# Calculate the Normalized Difference Vegetation Index (NDVI)
+  NDVImtl <- DVImtl/(mtl[[4]]+mtl[[1]])
+
+# Plot the NDVI map
+  plot(NDVImtl)
+
+
 Mmtl<- im.classify(NDVImtl, num_clusters=2)
 plot(Mmtl)
 mtlTEST <- im.classify(mtl, num_clusters=2)
@@ -145,3 +178,10 @@ plot(mtlTEST)
 
 
 mtl2 <- im.import("Montreal2018_4 2.jpg")
+
+# Making a multiframe of the visual spectrum, nir band, red band and final cluser
+ par(mfrow = c(2,2))
+    plotRGB(mtl, r=1, g=2, b=3)
+    plot(mtl[[4]])
+    plot(mtl[[1]])
+    plot()   # À ajouter !!!!!!!
