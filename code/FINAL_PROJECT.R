@@ -144,6 +144,9 @@
   #install.packages("devtools")
   library(devtools)
 
+  #install.packages("ggplot2")
+  library(ggplot2)
+  
   # Calling the imageRy package from devtools     ## Why from devtools??? ###
     # install_github("ducciorocchini/imageRy")
     # library(imageRy)
@@ -152,7 +155,6 @@
       # https://api.github.com/repos/ducciorocchini/imageRy/tarball/HEAD
       # Call the package directly from where is is on the mac (probably in Downloads folder) :
       # install.packages("/Users/lea/Desktop/R/ducciorocchini-imageRy-a971c18.tar.gz",repos = NULL, type = "source")
-
       # install.packages("dichromat")  
       # install.packages("fields") 
       # install.packages("ggplot2") 
@@ -165,23 +167,33 @@
   DVImtl <- mtl[[4]]-mtl[[1]] # DVI = NIR band - red band
 
 # Calculate the Normalized Difference Vegetation Index (NDVI)
-  NDVImtl <- DVImtl/(mtl[[4]]+mtl[[1]])
+  NDVImtl <- DVImtl/(mtl[[4]]+mtl[[1]]) 
+    # Values range between -1 and 1
+    # Values from 0 to 1 are usually vegetation
+    # Values from -1 to 0 are usually not vegetation (building, water, etc.)
 
 # Plot the NDVI map
   plot(NDVImtl)
 
+# Classify the NDVI map into different clusters (2 - urban cover and vegetation cover)
+  mtl_class <- im.classify(NDVImtl, num_clusters=2)
 
-Mmtl<- im.classify(NDVImtl, num_clusters=2)
-plot(Mmtl)
-mtlTEST <- im.classify(mtl, num_clusters=2)
-plot(mtlTEST)
-
-
-mtl2 <- im.import("Montreal2018_4 2.jpg")
+# Plot the clustered map
+  plot(mtl_class)
 
 # Making a multiframe of the visual spectrum, nir band, red band and final cluser
  par(mfrow = c(2,2))
     plotRGB(mtl, r=1, g=2, b=3)
     plot(mtl[[4]])
     plot(mtl[[1]])
-    plot()   # À ajouter !!!!!!!
+    plot(mtl_class)
+
+########################################
+######## Statistical Analysis  #########
+########################################
+
+### Lea's notes ###
+# Figure out the coloring palet for colour blind ppl
+# Find satellite image with 4 bands (1 for red, 4 for nir)
+# Figure out which test to use
+# Ask 1000 questions to intelligent ppl ...
