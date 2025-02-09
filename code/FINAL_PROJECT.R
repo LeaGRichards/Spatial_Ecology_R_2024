@@ -127,26 +127,17 @@
 #### Vegetation cover cluster map  #####
 ########################################
 
-# Loading the satellite image of Montreal 
-  mtl <- rast("Montreal2018_4 2.jpg")
-
-# Making an image of the study area with the visual spectrum of the EM spectrum
-  plotRGB(mtl, r=1, g=2, b=3) # What most humans could see
-
-# Making an image of the near infrared (nir) band of the stduy area
-  plot(mtl[[4]]) # What some insects might see
-
-# Making an image of the red band of the study area
-  plot(mtl[[1]]) # What the nir band will be compared too later
-
 # Installing the appropriate packages and calling their libraries
-  
+
+  # install.packages("terra") 
+  library(terra) # Needed for the rast() function
+
   #install.packages("devtools")
   library(devtools)
 
   #install.packages("ggplot2")
   library(ggplot2)
-  
+
   # Calling the imageRy package from devtools     ## Why from devtools??? ###
     # install_github("ducciorocchini/imageRy")
     # library(imageRy)
@@ -161,7 +152,18 @@
       # install.packages("viridis") 
 
       library(imageRy)
-      # library(terra)     ##  Might be necessary, let's see once we have an image to try with...
+
+# Loading the satellite image of Montreal 
+  mtl <- rast("Montreal2018_4 2.jpg")
+
+# Making an image of the study area with the visual spectrum of the EM spectrum
+  plotRGB(mtl, r=1, g=2, b=3) # What most humans could see
+
+# Making an image of the near infrared (nir) band of the stduy area
+  plot(mtl[[4]]) # What some insects might see
+
+# Making an image of the red band of the study area
+  plot(mtl[[1]]) # What the nir band will be compared too later
 
 # Calculating the Difference Vegetation Index (DVI)
   DVImtl <- mtl[[4]]-mtl[[1]] # DVI = NIR band - red band
@@ -191,6 +193,8 @@
 ########################################
 ######## Statistical Analysis  #########
 ########################################
+
+
 
 ### Lea's notes ###
 # Figure out the coloring palet for colour blind ppl
