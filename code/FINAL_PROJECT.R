@@ -130,13 +130,13 @@
 # Installing the appropriate packages and calling their libraries
 
   # install.packages("terra") 
-  library(terra) # Needed for the rast() function
+  library(terra) # Needed for the rast(), classify() and mask() function
 
   #install.packages("devtools")
-  library(devtools)
+  library(devtools)                            ## Do I need it??? ##
 
   #install.packages("ggplot2")
-  library(ggplot2)
+  library(ggplot2)                            ## Do I need it ??? ##
 
   # Calling the imageRy package from devtools     ## Why from devtools??? ###
     # install_github("ducciorocchini/imageRy")
@@ -153,42 +153,44 @@
 
       library(imageRy)
 
-# Loading the satellite image of Montreal 
-  mtl <- rast("Montreal2018_4 2.jpg")
+# Loading the satellite images of Montreal as rasters
+  mtlB8 <- rast("Montreal2018_B8.tiff") # This is the NIR band
+  mtlB4 <- rast("Montreal2018_B4.tiff") # This is the red band
 
-# Making an image of the study area with the visual spectrum of the EM spectrum
-  plotRGB(mtl, r=1, g=2, b=3) # What most humans could see
+# Getting some information on the rasters
+  mtlB8
+  mtlB4
+  # Both images have the righ coordinates
 
-# Making an image of the near infrared (nir) band of the stduy area
-  plot(mtl[[4]]) # What some insects might see
-
-# Making an image of the red band of the study area
-  plot(mtl[[1]]) # What the nir band will be compared too later
+# Plotting the rasters to have a look
+  plot(mtlB8)
+  plot(mtlB4)
 
 # Calculating the Difference Vegetation Index (DVI)
-  DVImtl <- mtl[[4]]-mtl[[1]] # DVI = NIR band - red band
+  DVImtl <- mtlB8 - mtlB4 # DVI = NIR band - red band
 
-# Calculate the Normalized Difference Vegetation Index (NDVI)
-  NDVImtl <- DVImtl/(mtl[[4]]+mtl[[1]]) 
-    # Values range between -1 and 1
-    # Values from 0 to 1 are usually vegetation
-    # Values from -1 to 0 are usually not vegetation (building, water, etc.)
+# Calculating the Normalized Difference Vegetation Index (NDVI)
+  NDVImtl <- DVImtl/(mtlB8 + mtlB4) # NDVI = DVI / (NIR band + red band)
 
-# Plot the NDVI map
+# Plotting the NDVI raster
   plot(NDVImtl)
 
-# Classify the NDVI map into different clusters (2 - urban cover and vegetation cover)
-  mtl_class <- im.classify(NDVImtl, num_clusters=2)
+# Creating classes of NDVI to cluster the NDVI raster
+  # I have chose to cluster the NDVI values in 2 groups
+  # Gr. 1 : values ranging from -1.0 to 0.5 -> Water, soil, most buildings, no or little vegetation
+  # Gr. 2 : values ranging from 0.5 to 1.0 -> Moderate to dense vegetation
+  NDVI_class <- matrix(c(-1.0, 0.5, 1, 
+                        0.5, 1.0, 2), ncol = 3, byrow = TRUE)
 
-# Plot the clustered map
+# Classifying the NDVI map into those 2 clusters
+  mtl_class <- classify(NDVImtl, NDVI_class)
+
+# Removing -1 values as they will appear as a third cluster
+  # and assigning them to NA
+  mtl_class[mtl_class == -1] <- NA
+
+# Plotting the clustered raster
   plot(mtl_class)
-
-# Making a multiframe of the visual spectrum, nir band, red band and final cluser
- par(mfrow = c(2,2))
-    plotRGB(mtl, r=1, g=2, b=3)
-    plot(mtl[[4]])
-    plot(mtl[[1]])
-    plot(mtl_class)
 
 ########################################
 ######## Statistical Analysis  #########
@@ -198,6 +200,5 @@
 
 ### Lea's notes ###
 # Figure out the coloring palet for colour blind ppl
-# Find satellite image with 4 bands (1 for red, 4 for nir)
 # Figure out which test to use
-# Ask 1000 questions to intelligent ppl ...
+# Ask 1000 questions to intelligent ppl ... <3 
