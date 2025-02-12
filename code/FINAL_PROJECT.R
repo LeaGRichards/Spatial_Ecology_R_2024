@@ -196,6 +196,92 @@
 ######## Statistical Analysis  #########
 ########################################
 
+# Convert the bird observations density map into a raster
+rast_birds <- rast(dm_birds)
+
+# Visualise the bird observation density raser
+plot(rast_birds)
+
+# Get information of both rasters (birds and NDVI)
+print(rast_birds)
+print(mtl_class)
+  # The resolutions of the rasters are different
+  # The extent (coordinates) are the same
+  # The Coordinate Reference Systems (CRS) is missing for the bird data raster
+
+# Attribute the right CRS to the bird data raster
+  crs(rast_birds) <- crs(mtl_class)
+  print(rast_birds) # The CRS is adequate now
+  
+# Resample the bird data raster so the resolution matches the clustered NDVI raster
+  rast_birds2 <- resample(rast_birds, mtl_class, method = "bilinear")
+  # Using the bilinear method as it's recommended when trying to get smooth raster ### CHECK THIS ###
+  print(rast_birds2)
+  print(mtl_class)
+  # Both rasters now have the same resolution
+
+# Extracting the cell values of the bird raster
+  birds <- values(rast_birds2)
+  
+# Making sure the birds values are a vector
+  class(birds) # It is classed as a matrix
+  birds2 <- as.vector(birds)
+  class(birds2) # Classed as numeric, this is good
+
+# Extract the cell values of the NDVI raster
+  NDVI <- values(mtl_class)
+
+# Making sure the NDVI values are a vector
+  class(NDVI) # It is classed as a matrix
+  NDVI2 <- as.vector(NDVI)
+  class(NDVI2) # Classed as numeric, this is good
+  
+# Create a data frame with both cluster
+  df_BN <- data.frame(birds2 = birds2, NDVI2 = NDVI2)
+  head(df_BN) # This data frame looks good, it has the right column names
+
+# Visualizing the distribution of the data
+  hist(df_BN$birds, breaks = 50, main = "Bird Density Histogram", xlab = "Bird Density")
+  # We can already see the data is not distributed normally
+  # It is skewed to the right, the tail is towards the right
+
+# Testing if the data is normally distributed
+  # The shapiro-test only works with =< 5000 data points
+  # The data frame has 6,500,000 points, too many for this test
+  
+  # An alternative is to measure the symmetry and tailddness of the data
+  # and see if the results are ones expected for a normal distribution
+  # A normal distribution:
+    # is symmetrical : skewness tends to 0, between -0.5 and 0.5 is considered good enough
+    # Has a taildness which the kurtosis value is 3 
+  
+  
+  # With the skewness function of the e1071 package
+  library(e1071)
+  skewness(df_BN$birds2)
+  # 1.551999 --> The data is skewed to the right (NOT normally distributed)
+  
+  # With the kurtosis function of the e1071 package
+  kurtosis(df_BN$birds2)
+  # 4.147184 --> The data has a heavy tail (tail extends slower than a normal distribution)
+  
+  # Conclusion : The data is NOT normally distributed (as expected when vizualising the histogram)
+
+# Testing for correlation with a non-parametric test
+  # The spearman's Rank Correlation does not require normality
+  cor.test(df_BN$birds2, df_BN$NDVI, method = "spearman")
+  cor.test(df_BN$birds2, df_BN$NDVI, method = "kendall")
+  
+# Result of the Spearman Rank Correlation interpretation
+  # p-value = 9.964e-10 (<0.05)
+  # Spearman's rho = 0.002463804
+  
+  # The p-value indicates the relationship between the bird observation density 
+  # and the NDVI clusters is significant, but the rho values shows that the relationship
+  # is weak. 
+  
+  
+
 
 
 ### Lea's notes ###
