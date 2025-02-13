@@ -1,4 +1,6 @@
+#####################################
 ########### FINAL PROJECT ###########
+#####################################
 
 # Does a density map of observations of birds by citizens (GBIF dataset) 
 # correlate with vegetation cover in the region on Montreal in June 2018?
@@ -240,8 +242,12 @@ print(mtl_class)
   df_BN <- data.frame(birds2 = birds2, NDVI2 = NDVI2)
   head(df_BN) # This data frame looks good, it has the right column names
 
+# Remove NA values in the darta frame
+  df_BN0 <- na.omit(df_BN)
+
 # Visualizing the distribution of the data
-  hist(df_BN$birds, breaks = 50, main = "Bird Density Histogram", xlab = "Bird Density")
+  hist(df_BN0$birds, breaks = 50, main = "Bird Observation Density Histogram", 
+       xlab = "Bird Observation Density")
   # We can already see the data is not distributed normally
   # It is skewed to the right, the tail is towards the right
 
@@ -267,24 +273,70 @@ print(mtl_class)
   
   # Conclusion : The data is NOT normally distributed (as expected when vizualising the histogram)
 
-# Testing for correlation with a non-parametric test
-  # The spearman's Rank Correlation does not require normality
+# Creating groups of data distinguised by their associated NDVI cluster (1 and 2)
+  df_BN1 <- df_BN0[df_BN0$NDVI == 1, ]  # Cluster 1
+  df_BN2 <- df_BN0[df_BN0$NDVI == 2, ]  # Cluster 2
+
+# Comparing density numbers in cluster 1 to those in cluster 2 
+  # Using the Wilcoxon Rank-Sum test (as it can be used if the data is not 
+  # distributed normally, and it requires of 2 continuous variables
+  wilcox.test(df_BN1$birds2, df_BN2$birds2)
+  
+# Result and interpretation of the Wilcoxon Rank-Sum test
+  # p-value = 9.965e-10; p-value < 0.05
+  # W = 4.6465e+12 (the test statistic value)
+  
+  # Since the p-value is smaller than 0.05, the bird observation densities differ 
+  # significantly (at a 95% confidence interval) between NDVI clusters 1 and 2. 
+  # We reject the null hypothesis that both groups have similar distributions.
+  # This means bird observation densities differ between urbanized areas (water, 
+  # soil, most buildings, no or little vegetation) and vegetation areas (moderate 
+  # to dense vegetation). It would be interesting to know if this relationship 
+  # is strong or weak.
+
+# Visualizing the data of the 2 clusters with boxplots
+  boxplot(birds2 ~ NDVI2, data = df_BN0, 
+          main = "Bird Density by NDVI Cluster", 
+          xlab = "NDVI Cluster", 
+          ylab = "Bird Density", 
+          col = c("darkgrey", "lightgrey"))
+  
+  # The data is distributed very similarly. 
+  # Both clusters have similar medians and interguartile range.
+  # There are MANY outliers (thick black line above the boxes), expected with a 
+    # skewed distribution.
+  # There might be a statistically significant correlation, but it seams very weak 
+    # as we can't visualize it. We should try and measure the strength of this 
+    # significant relationship.
+
+# Testing for correlation with the Spearman's Rank Correlation
+  # It does not require normality, works well with heavy-tailes skewed distributions
+  # It works with categorical variables (NDVI clusters)
+  # It can measure the strength of a significant relationship between categories
   cor.test(df_BN$birds2, df_BN$NDVI, method = "spearman")
-  cor.test(df_BN$birds2, df_BN$NDVI, method = "kendall")
   
 # Result of the Spearman Rank Correlation interpretation
   # p-value = 9.964e-10 (<0.05)
   # Spearman's rho = 0.002463804
   
-  # The p-value indicates the relationship between the bird observation density 
-  # and the NDVI clusters is significant, but the rho values shows that the relationship
-  # is weak. 
+  # The p-value indicates there is a statistically significant correlation (at 
+  # 95% confidence interval) between the bird observation densities 
+  # and the NDVI clusters. The rho values is very close to 0 which shows that 
+  # the relationship is weak. This might be explained by such a large dataset, 
+  # in which it might be more probably to observe a significant correlation that 
+  # is not strong or meaningful practically.
+
+# Final conclusion
+  # There is a weak relationship between bird observations densities from GBIF 
+  # users and urbanized areas VS moderate to dense vegetation.
   
+  # It might be interesting to observe that relationship at a more close-up scale 
+  # of NDVI clusters. The relationship might be "blurred" by the scale of the 
+  # satellite image of Montreal which is quite wide and might lack details.
   
+  # It might be interesting to test the relationship at multiple different 
+  # urbanized areas in the world and see if there is consistency across them.
 
-
-
-### Lea's notes ###
-# Figure out the coloring palet for colour blind ppl
-# Figure out which test to use
-# Ask 1000 questions to intelligent ppl ... <3 
+#####################################
+############# THE END ###############
+#####################################
