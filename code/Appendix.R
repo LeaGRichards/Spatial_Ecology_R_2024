@@ -98,7 +98,7 @@
 
 # Plotting the coordinates to visualize them
   plot(birds3$long, birds3$lat, main = "Bird Observation Map", 
-    xlb = "Longitude (DD)", ylab = "Latitude (DD)")
+    xlab = "Longitude (DD)", ylab = "Latitude (DD)")
   
 # Making a density map using spatstat
   # We need to tranform the coordinates into a point pattern object (ppp)
