@@ -119,9 +119,12 @@
     
   # Computing the ppp to a density map
     dm_birds <- density(birds_ppp)
-    
+
+  # Creating a color ramp palette to plot with
+    cl <- colorRampPalette(c("black", "darkgrey", "white")) (100)
+
   # Make a plot with the density map
-    plot(dm_birds, main = "Density Map of Bird Observations")
+    plot(dm_birds, main = "Density Map of Bird Observations", col = cl)
 
 
 ########################################
@@ -142,17 +145,14 @@
     # Both images have the righ coordinates
 
 # Plotting the rasters to have a look
-  plot(mtlB8, main = "Near-Infrared band of Montreal on the 15th of June 2018")
-  plot(mtlB4, main = "Red band of Montreal on the 15th of June 2018")
+  plot(mtlB8, main = "Near-Infrared band of Montreal on the 15th of June 2018", col = cl)
+  plot(mtlB4, main = "Red band of Montreal on the 15th of June 2018", col = cl)
 
 # Calculating the Difference Vegetation Index (DVI)
   DVImtl <- mtlB8 - mtlB4 # DVI = NIR band - red band
 
 # Calculating the Normalized Difference Vegetation Index (NDVI)
   NDVImtl <- DVImtl/(mtlB8 + mtlB4) # NDVI = DVI / (NIR band + red band)
-
-# Creating a color ramp palette to plot with
-  cl <- colorRampPalette(c("black", "darkgrey", "white")) (100)
 
 # Plotting the NDVI raster
   plot(NDVImtl, main = "NDVI Map of Montreal on the 15th of June 2018", col = cl)
@@ -186,8 +186,8 @@
 # Converting the bird observations density map into a raster
   rast_birds <- rast(dm_birds)
 
-# Visualizing the bird observation density raser
-  plot(rast_birds)
+# Visualizing the bird observation density raster
+  plot(rast_birds, main = "Density Map of Bird Observations", col = cl)
 
 # Getting information of both rasters (bird observations and NDVI)
   print(rast_birds)
