@@ -241,7 +241,7 @@
   # An alternative is to measure the symmetry and taildness of the data
   # and see if the results are ones expected for a normal distribution
   # A normal distribution:
-    # is symmetrical: skewness tends to 0, between -0.5 and 0.5 is considered good enough
+    # is symmetrical: skewness of 0
     # Has a taildness which the kurtosis value is 3 
   
   # Measuring the skewness
@@ -257,7 +257,7 @@
   # Conclusion: The data is NOT normally distributed 
   # (As expected when visualizing the histogram)
 
-# Creating groups of data distinguised by their associated NDVI cluster
+# Creating groups of data distinguished by their associated NDVI cluster
   df_BN1 <- df_BN0[df_BN0$NDVI == 1, ]  # Cluster 1
   df_BN2 <- df_BN0[df_BN0$NDVI == 2, ]  # Cluster 2
 
@@ -283,7 +283,7 @@
   boxplot(birds2 ~ NDVI2, data = df_BN0, 
           main = "Bird Observation Density for both NDVI Clusters", 
           xlab = "NDVI Cluster", 
-          ylab = "Bird Density", 
+          ylab = "Bird Observation Density", 
           col = c("darkgrey", "lightgrey"))
   
   # The data is distributed very similarly. 
@@ -313,13 +313,15 @@
 
 # Final conclusion
   # There is a weak relationship between bird observations densities from GBIF 
-  # users and urbanized areas VS moderate to dense vegetation.
+  # users in urbanized areas VS moderate to dense vegetation.
   
   # It might be interesting to observe that relationship at a more close-up scale 
   # of NDVI clusters as the relationship might be "blurred", lacking details, by the 
   # resolution of the satellite image of Montreal which is quite wide. This map had 
   # pixels of about 14.5m square.
-  
+
+  # It might be interesting to remove farmland of the study area.
+
   # It might be interesting to test the relationship at multiple different 
   # urbanized areas in the world and see if there is consistency across them.
 
