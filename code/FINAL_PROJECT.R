@@ -41,7 +41,7 @@
     # Scientific name: Aves
     # Year: Between start of 2018 and end of 2018
 
-# Montreal satellite image dataset source : 
+# Montreal satellite image dataset source: 
   # Copernicus Sentinel data (2025), processed by LeaGRichards, retrieved from EO Browser 
   # (https://browser.dataspace.copernicus.eu/?zoom=11&lat=45.54147&lng=-73.7265&themeId=
   # DEFAULT-THEME&visualizationUrl=U2FsdGVkX1%2FJtzgd7lmq2npjCupmbbb0kJIAYzSCZ0ZvESpXPtiZ
@@ -49,30 +49,30 @@
   # setId=S2_L2A_CDAS&fromTime=2018-06-15T00%3A00%3A00.000Z&toTime=2018-06-15T23%3A59%3A59
   # .999Z&layerId=1_TRUE_COLOR&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE)
 
-  # Parameters of download : 
-    # Polygon : 
+  # Parameters of download: 
+    # Polygon: 
         # POLYGON((-73.95502 45.70391, -73.49812 45.70391, -73.49812 45.37882, -73.95502 
           # 45.37882, -73.95502 45.70391))
         # LINESTRING(-73.95502 45.70391, -73.49812 45.70391, -73.49812 45.37882, -73.95502 
           # 45.37882, -73.95502 45.70391)
-    # Show captions : OFF
-    # Crop to AOI : ON
-    # Image format : TIFF (16-bit)
-    # Image resolution : HIGH (2460 x 2500 px)
-    # Layers: Vizualized : True color
-    # Layers Raw : B04 and B08
-    # Coordinate system : WGS 84 (EPSG:4326)
+    # Show captions: OFF
+    # Crop to AOI: ON
+    # Image format: TIFF (16-bit)
+    # Image resolution: HIGH (2460 x 2500 px)
+    # Layers: Vizualized: True color
+    # Layers Raw: B04 and B08
+    # Coordinate system: WGS 84 (EPSG:4326)
       # Resolution:
       # lat.: 0.0001300 deg/px (0.5sec/px)
       # long.: 0.0001857 deg/px (0.7sec/px)
     
 ########################################
-### Density map of bird observations ###
+### Density Map of Bird Observations ###
 ########################################
 
 # Calling the GBIF dataset
   birds <- read.table("occurrence.txt", header=TRUE, sep="\t", fill = TRUE)
-  # "\t" for tabs as seperators
+  # "\t" for tabs as separators
   # fill = TRUE adds blank fields if rows aren't equal
 
 # Removing quotation marks and spaces from latitudes and longitudes columns
@@ -100,7 +100,7 @@
 
 # Plotting the coordinates to visualize them
   plot(birds3$long, birds3$lat, main = "Bird Observation Map", 
-    xlb = "Longitude (DD)", ylab = "Latitude (DD)")
+    xlab = "Longitude (DD)", ylab = "Latitude (DD)")
   
 # Making a density map using spatstat
   # We need to tranform the coordinates into a point pattern object (ppp)
@@ -128,7 +128,7 @@
 
 
 ########################################
-#### Vegetation cover cluster map  #####
+#### Vegetation Cover Cluster Map  #####
 ########################################
 
 # Calling the appropriate package
@@ -142,7 +142,7 @@
 # Getting some information on the rasters
   mtlB8
   mtlB4
-    # Both images have the righ coordinates
+    # Both images have the right coordinates
 
 # Plotting the rasters to have a look
   plot(mtlB8, main = "Near-Infrared band of Montreal on the 15th of June 2018", col = cl)
@@ -159,9 +159,9 @@
 
 # Creating classes of NDVI that will be used to create clusters
   # I have chosen to cluster the NDVI values in 2 groups
-  # Gr. 1 : values ranging from -1.0 to 0.5 -> Water, soil, most buildings, 
+  # Gr. 1: values ranging from -1.0 to 0.5 -> Water, soil, most buildings, 
     # no or little vegetation
-  # Gr. 2 : values ranging from 0.5 to 1.0 -> Moderate to dense vegetation
+  # Gr. 2: values ranging from 0.5 to 1.0 -> Moderate to dense vegetation
   NDVI_class <- matrix(c(-1.0, 0.5, 1, 
                         0.5, 1.0, 2), ncol = 3, byrow = TRUE)
 
@@ -235,15 +235,14 @@
   # It is skewed to the right (the tail is towards the right)
 
 # Testing if the data is normally distributed
-  # The shapiro-test only works with =< 5000 data points
+  # The Shapiro-test only works with =< 5000 data points
   # The data frame has 6,500,000 points, too many for this test
   
   # An alternative is to measure the symmetry and taildness of the data
   # and see if the results are ones expected for a normal distribution
   # A normal distribution:
-    # is symmetrical : skewness tends to 0, between -0.5 and 0.5 is considered good enough
+    # is symmetrical: skewness tends to 0, between -0.5 and 0.5 is considered good enough
     # Has a taildness which the kurtosis value is 3 
-  
   
   # Measuring the skewness
   library(e1071)
@@ -255,7 +254,7 @@
   # 4.147184 --> The data has a heavy tail 
   # (The tail extends slower than a normal distribution)
   
-  # Conclusion : The data is NOT normally distributed 
+  # Conclusion: The data is NOT normally distributed 
   # (As expected when visualizing the histogram)
 
 # Creating groups of data distinguised by their associated NDVI cluster
