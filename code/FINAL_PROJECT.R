@@ -3,7 +3,7 @@
 #####################################
 
 # Do bird observation densities correlate with moderate to 
-# dense vegetation in the region on Montreal in June 2018?
+# dense vegetation in the region of Montreal in June 2018?
 
 # Context: 
   # Study area (decimal degrees coordinates): Cosmopolitain Region of Montreal
