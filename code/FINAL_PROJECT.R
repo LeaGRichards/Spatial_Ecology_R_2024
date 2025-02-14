@@ -305,9 +305,7 @@
   # The p-value indicates there is a statistically significant correlation (at 
   # 95% confidence interval) between the bird observation densities 
   # and the NDVI clusters, as expected. The rho values is very close to 0 which shows 
-  # that the relationship is weak. This might be explained by such a large dataset, 
-  # with which it might be more probable to observe a significant correlation that 
-  # is not strong or meaningful practically.
+  # that the relationship is weak, basically not meaningful practically speaking.
 
 # Final conclusion
   # There is a weak relationship between bird observations densities from GBIF 
