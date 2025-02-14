@@ -13,7 +13,7 @@
       # -73.95502, 45.37882
   # Bird observations from GBIF in June 2018 in the regions of Montreal
 
-# Bird observation dataset sources: 
+# Bird observation dataset source: 
   # GBIF.org (30 January 2025) GBIF Occurrence Download https://doi.org/10.15468/
   # dl.gjxh38 Auer T, Barker S, Barry J, Charnoky M, Curtis J, Davies I, Davis C, 
   # Downie I, Fink D, Fredericks T, Ganger J, Gerbracht J, Hanks C, Hochachka W, 
@@ -79,7 +79,7 @@
   birds[[98]] <- gsub('"', '', birds[[98]]) # Latitudes
   birds[[99]] <- gsub('"', '', birds[[99]]) # Longitudes
 
-# Classing the longitude and latitude as numeric values
+# Classing the longitudes and latitudes as numeric values
   class(birds[[98]]) # It is classed a characters
   class(birds[[99]]) # It is classed a characters
   
@@ -106,7 +106,7 @@
   # We need to tranform the coordinates into a point pattern object (ppp)
   # that fits into a defined window (study area)
 
-  # CallING the appropriate library
+  # Calling the appropriate library
     # install.packages("spatstat")
     library(spatstat)
     
@@ -195,7 +195,7 @@
     # The resolutions of the rasters are different
     # The extent (coordinates) are the same
   
-# Resample the bird data raster so the resolution matches the clustered NDVI raster
+# Resampling the bird data raster so the resolution matches the clustered NDVI raster
   rast_birds2 <- resample(rast_birds, mtl_class, method = "bilinear")
     # Using the bilinear method is recommended when using continuous variables and 
     # when trying to get a smooth raster. The value of the new pixel is a weighed 
@@ -219,11 +219,11 @@
   class(NDVI) # It is classed as a matrix
   NDVI2 <- as.vector(NDVI)
   
-# Create a data frame with both cluster
+# Creating a dataframe with both cluster
   df_BN <- data.frame(birds2 = birds2, NDVI2 = NDVI2)
-  head(df_BN) # This data frame looks good
+  head(df_BN) # This dataframe looks good
 
-# Remove rows with at least one NA value in the data frame
+# Removing rows with at least one NA value in the dataframe
   df_BN0 <- na.omit(df_BN)
 
 # Visualizing the distribution of the data
@@ -236,13 +236,13 @@
 
 # Testing if the data is normally distributed
   # The Shapiro-test only works with =< 5000 data points
-  # The data frame has 6,500,000 points, too many for this test
+  # The data frame has 6,500,000 data points, too many for this test
   
   # An alternative is to measure the symmetry and taildness of the data
   # and see if the results are ones expected for a normal distribution
   # A normal distribution:
     # is symmetrical: skewness of 0
-    # Has a taildness which the kurtosis value is 3 
+    # Has a taildness of a kurtosis value of 3 
   
   # Measuring the skewness
   library(e1071)
@@ -287,12 +287,11 @@
           col = c("darkgrey", "lightgrey"))
   
   # The data is distributed very similarly. 
-  # Both clusters have similar medians and interguartile range.
+  # Both clusters have similar medians and interquartile range.
   # There are MANY outliers (thick black line above the boxes), expected with a 
     # skewed distribution.
-  # There might be a statistically significant correlation, but it seams very weak 
-    # as we can't visualize it. We should try and measure the strength of this 
-    # significant relationship.
+  # There might be a statistically significant correlation, but it seems very weak 
+    # as we can't visualize it. We should try to measure the strength of it.
 
 # Testing for correlation with the Spearman's Rank Correlation
   # It does not require normality, works well with heavy-tailed skewed distributions
