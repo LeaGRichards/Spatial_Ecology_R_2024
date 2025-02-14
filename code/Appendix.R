@@ -30,7 +30,7 @@
     # Basis of record: Human observation
     # Continent: North America
     # Country of area: Canada
-    # Geometry: POLYGON((73.65572 45.45702,-73.57351 45.45702,-73.57351 45.5139,-73.65572 
+    # Geometry: POLYGON((-73.65572 45.45702,-73.57351 45.45702,-73.57351 45.5139,-73.65572 
       # 45.5139,-73.65572 45.45702))
     # Has coordinate: true
     # Has geospatial issue: false
@@ -49,9 +49,9 @@
 
   # Parameters of download : 
     # Polygon : 
-        # POLYGON((73.65572 45.45702,-73.57351 45.45702,-73.57351 45.5139,-73.65572 
+        # POLYGON((-73.65572 45.45702,-73.57351 45.45702,-73.57351 45.5139,-73.65572 
             # 45.5139,-73.65572 45.45702))
-        # LINESTRING(73.65572 45.45702,-73.57351 45.45702,-73.57351 45.5139,-73.65572 
+        # LINESTRING(-73.65572 45.45702,-73.57351 45.45702,-73.57351 45.5139,-73.65572 
             # 45.5139,-73.65572 45.45702)
     # Show captions : OFF
     # Crop to AOI : ON
@@ -104,7 +104,7 @@
   # We need to tranform the coordinates into a point pattern object (ppp)
   # that fits into a defined window (study area)
 
-  # CallING the appropriate library
+  # Calling the appropriate library
     # install.packages("spatstat")
     library(spatstat)
     
@@ -240,7 +240,7 @@
   # An alternative is to measure the symmetry and taildness of the data
   # and see if the results are ones expected for a normal distribution
   # A normal distribution:
-    # is symmetrical : skewness tends to 0, between -0.5 and 0.5 is considered good enough
+    # is symmetrical : skewness of 0
     # Has a taildness which the kurtosis value is 3 
   
   
