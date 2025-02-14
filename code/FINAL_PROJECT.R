@@ -2,6 +2,8 @@
 ########### FINAL PROJECT ###########
 #####################################
 
+
+
 # Do bird observation densities correlate with moderate to 
 # dense vegetation in the region of Montreal in June 2018?
 
