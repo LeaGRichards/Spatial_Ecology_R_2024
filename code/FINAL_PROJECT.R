@@ -276,8 +276,7 @@
   # We reject the null hypothesis that both groups have similar distributions.
   # This means bird observation densities differ between urbanized areas (water, 
   # soil, most buildings, no or little vegetation) and vegetation areas (moderate 
-  # to dense vegetation). It would be interesting to know if this relationship 
-  # is strong or weak.
+  # to dense vegetation). It would be interesting to know more about this relationship.
 
 # Visualizing the data of the 2 clusters with boxplots
   boxplot(birds2 ~ NDVI2, data = df_BN0, 
