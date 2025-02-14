@@ -190,8 +190,8 @@
   plot(rast_birds, main = "Density Map of Bird Observations", col = cl)
 
 # Getting information of both rasters (bird observations and NDVI)
-  print(rast_birds)
-  print(mtl_class)
+  rast_birds
+  mtl_class
     # The resolutions of the rasters are different
     # The extent (coordinates) are the same
   
@@ -201,8 +201,8 @@
     # when trying to get a smooth raster. The value of the new pixel is a weighed 
     # average of the 4 nearest pixels. 
     
-  print(rast_birds2)
-  print(mtl_class)
+  rast_birds2
+  mtl_class
     # Both rasters now have the same resolution
 
 # Extracting all cell values of the bird observation raster
